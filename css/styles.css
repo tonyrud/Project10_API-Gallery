@@ -1,0 +1,48 @@
+.main-header {
+  text-align: center; }
+
+/* Base Styles -------------------- */
+* {
+  box-sizing: border-box; }
+
+body {
+  color: #878787;
+  margin: 0; }
+
+/* Pseudo-classes ------------------ */
+a:link {
+  color: red;
+  text-decoration: none; }
+
+a:visited {
+  color: blue; }
+
+a:hover {
+  color: rgba(255, 0, 0, 0.5); }
+
+/* Web Fonts -------------------- */
+@font-face {
+  font-family: 'Abolition Regular';
+  src: url("../fonts/abolition-regular-webfont.eot");
+  src: url("../fonts/abolition-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/abolition-regular-webfont.woff") format("woff"), url("../fonts/abolition-regular-webfont.ttf") format("truetype"); }
+
+/* Main Styles --------------------- */
+.input {
+  margin: 0 auto 1em;
+  min-width: 270px;
+  width: 80%;
+  max-width: 500px;
+  height: 35px;
+  padding-left: 10px;
+  color: #2d3945;
+  border: 1px solid grey;
+  border-radius: 5px; }
+
+.bounce {
+  transition: all 0.6s 0s cubic-bezier(1, -0.3, 0.35, 1.335); }
+
+.main-header {
+  padding-top: 170px;
+  height: 850px;
+  background: linear-gradient(#878787, transparent 90%), linear-gradient(0deg, #eee, transparent), #878787 url("../img/mountains.jpg") no-repeat center;
+  background-size: cover; }

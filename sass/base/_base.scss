@@ -1,0 +1,32 @@
+/* Base Styles -------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: $color-text-base;
+  margin: 0;
+}
+
+h1,
+h2 {
+
+}
+
+/* Pseudo-classes ------------------ */
+
+a {
+    &:link {
+      color: $color-link-default;
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: $color-link-visited;
+    }
+
+    &:hover {
+      color: rgba($color-link-default, .5);
+    }
+}

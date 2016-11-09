@@ -1,0 +1,3 @@
+.bounce {
+    @include moveTransition($transitionWhat, $transitionSpeed, 0s, $transitionBounce);
+}

@@ -1,0 +1,16 @@
+
+.input {
+    margin: 0 auto 1em;
+    min-width: 270px;
+    width: 80%;
+    max-width: 500px;
+    height: 35px;
+    padding-left: 10px;
+    color: #2d3945;
+    border: 1px solid grey;
+    border-radius: 5px;
+
+    @include mQuery(desktop){
+      // text-align: center;
+    }
+}

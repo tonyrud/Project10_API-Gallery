@@ -1,0 +1,51 @@
+// media query mixin
+@mixin mQuery($break) {
+  @if $break == mobile {
+    @media (min-width: $break-mobile) {
+       @content;
+     }
+  }  @else if $break == tablet {
+    @media (min-width: $break-tablet){
+      @content
+    }
+  } @else if $break == desktop {
+    @media (min-width: $break-desktop){
+      @content
+    }
+  }
+}
+
+// Centered flexbox
+
+@mixin flexCenter($flow) {
+  display: flex;
+  flex-flow: $flow;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexLeft($flow) {
+  display: flex;
+  flex-flow: $flow;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// animation
+@mixin moveTransition($what, $speed, $delay, $style) {
+  transition: $what $speed $delay $style;
+}
+
+// create icon sizes
+@mixin iconSize($size) {
+  width: $size;
+  height: $size;
+}
+
+// create an accent line
+@mixin accentLine($lHeight, $lWidth) {
+  @extend   %marginAuto;
+  @extend   %borderbottom;
+  width   : $lWidth;
+  height  : $lHeight;
+  color: rgba(0, 0, 0, .1);
+}

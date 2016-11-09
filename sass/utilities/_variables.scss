@@ -1,0 +1,40 @@
+//Descriptive color variables
+
+$white          : #eee;
+$black          : #111;
+$grey           : #878787;
+
+// Functional color variables
+
+$color-prim        : $grey;
+$color-sec         : darken($grey, 25%);
+
+$color-text-light  : $white;
+$color-text-base   : $grey;
+$color-text-dark   : darken($grey, 25%);
+
+$color-border-light : lighten($grey, 35%);
+$color-border-dark  : $black;
+
+$color-link-default : red;
+$color-link-visited : blue;
+
+$color-shadow       : rgba($black,.8);
+$color-body         : $white;
+
+// Media query breakpoints
+$break-mobile      : 500px;
+$break-tablet      : 768px;
+$break-desktop     : 1024px;
+
+//animation variables
+$transitionWhat: all;
+$transitionSpeed: .6s;
+$transitionDelay: .3s;
+$transitionEase: ease-in-out;
+$transitionBounce : cubic-bezier(1, -0.3, 0.35, 1.335);
+
+//Buttons and icons variables
+$iconSmall: 34px;
+$iconLarge: 55px;
+$lineWidth         : 90%;
