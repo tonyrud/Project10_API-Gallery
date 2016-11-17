@@ -17,16 +17,10 @@
 
 // Centered flexbox
 
-@mixin flexCenter($flow) {
+@mixin flexMix($flow: row, $justify: center) {
   display: flex;
   flex-flow: $flow;
-  justify-content: center;
-  align-items: center;
-}
-@mixin flexLeft($flow) {
-  display: flex;
-  flex-flow: $flow;
-  justify-content: flex-start;
+  justify-content: $justify;
   align-items: center;
 }
 

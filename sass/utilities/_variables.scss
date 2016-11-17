@@ -18,9 +18,14 @@ $color-border-dark  : $black;
 
 $color-link-default : red;
 $color-link-visited : blue;
+$color-overlay: rgba($black, .7);
 
 $color-shadow       : rgba($black,.8);
 $color-body         : $white;
+
+//font stuff
+$font-header: 2em;
+$font-fam: 'Rubik', sans-serif;
 
 // Media query breakpoints
 $break-mobile      : 500px;
@@ -35,6 +40,8 @@ $transitionEase: ease-in-out;
 $transitionBounce : cubic-bezier(1, -0.3, 0.35, 1.335);
 
 //Buttons and icons variables
-$iconSmall: 34px;
-$iconLarge: 55px;
+$iconSmall:     34px;
+$iconLarge:     55px;
 $lineWidth         : 90%;
+
+$inputHeight: 40px;

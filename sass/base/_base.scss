@@ -5,28 +5,39 @@
 }
 
 body {
-  color: $color-text-base;
+  color: $color-text-dark;
   margin: 0;
+  font-family: $font-fam;
 }
 
 h1,
 h2 {
-
+  text-align: center;
+  margin: 1em 0;
+  font-size: $font-header;
 }
 
-/* Pseudo-classes ------------------ */
+form {
+  margin: .6em 0;
+  @include flexMix();
+}
 
-a {
-    &:link {
-      color: $color-link-default;
-      text-decoration: none;
-    }
 
-    &:visited {
-      color: $color-link-visited;
-    }
+.page {
+  // background: $white;
+  margin: 0 auto;
+  max-width: 1366px;
+}
 
-    &:hover {
-      color: rgba($color-link-default, .5);
-    }
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%
+}
+
+.primary-content{
+  max-width: 1366px;
+  text-align: center;
 }

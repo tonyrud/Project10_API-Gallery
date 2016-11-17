@@ -1,48 +1,209 @@
-.main-header {
-  text-align: center; }
+button, input[type='submit'] {
+  border: 0px solid #eee;
+  background: #aaa;
+  color: #eee;
+  padding: 10px;
+  text-transform: uppercase;
+  margin: .5em auto 1em;
+  display: inline-block;
+  width: 10%;
+  height: 40px;
+  max-width: 300px;
+  text-align: center;
+  font-weight: 300;
+  border-radius: .25em;
+  font-size: 1em;
+  cursor: pointer; }
 
 /* Base Styles -------------------- */
 * {
   box-sizing: border-box; }
 
 body {
-  color: #878787;
-  margin: 0; }
+  color: #474747;
+  margin: 0;
+  font-family: "Rubik", sans-serif; }
 
-/* Pseudo-classes ------------------ */
-a:link {
-  color: red;
-  text-decoration: none; }
+h1,
+h2 {
+  text-align: center;
+  margin: 1em 0;
+  font-size: 2em; }
 
-a:visited {
-  color: blue; }
+form {
+  margin: .6em 0;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center; }
 
-a:hover {
-  color: rgba(255, 0, 0, 0.5); }
+.page {
+  margin: 0 auto;
+  max-width: 1366px; }
+
+ul {
+  list-style: none; }
+
+img {
+  width: 100%; }
+
+.primary-content {
+  max-width: 1366px;
+  text-align: center; }
 
 /* Web Fonts -------------------- */
 @font-face {
   font-family: 'Abolition Regular';
   src: url("../fonts/abolition-regular-webfont.eot");
   src: url("../fonts/abolition-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/abolition-regular-webfont.woff") format("woff"), url("../fonts/abolition-regular-webfont.ttf") format("truetype"); }
-
 /* Main Styles --------------------- */
+button:focus {
+  outline: -webkit-focus-ring-color auto 0; }
+
+input[type='submit'] {
+  margin: 0;
+  border-radius: 0 4px 4px 0;
+  outline: none; }
+
 .input {
-  margin: 0 auto 1em;
+  margin: 1em 0;
   min-width: 270px;
   width: 80%;
   max-width: 500px;
-  height: 35px;
-  padding-left: 10px;
-  color: #2d3945;
-  border: 1px solid grey;
-  border-radius: 5px; }
-
-.bounce {
-  transition: all 0.6s 0s cubic-bezier(1, -0.3, 0.35, 1.335); }
+  height: 40px;
+  padding: 10px;
+  color: #474747;
+  border: 0px solid grey;
+  border-radius: 4px 0 0 4px;
+  font-family: "Rubik", sans-serif;
+  font-size: 1em;
+  background: #ddd; }
+  .input:focus {
+    outline: none; }
 
 .main-header {
+  text-align: center;
   padding-top: 170px;
   height: 850px;
   background: linear-gradient(#878787, transparent 90%), linear-gradient(0deg, #eee, transparent), #878787 url("../img/mountains.jpg") no-repeat center;
   background-size: cover; }
+
+/*-----------
+Gallery
+-----------*/
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; }
+  .gallery .item-container {
+    width: 17%;
+    margin: 1em;
+    transition: all .5s ease-in-out;
+    transform: translateY(50px);
+    opacity: 0; }
+    .gallery .item-container .image {
+      width: 100%;
+      height: 100%; }
+  .gallery .animate-in {
+    animation: slideIn 1s ease forwards; }
+  .gallery .animate-out {
+    animation: slideOut .25s ease forwards; }
+
+@keyframes slideIn {
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+@keyframes slideOut {
+  100% {
+    opacity: 0; } }
+/*-----------
+Overlay lightbox
+-----------*/
+#overlay {
+  color: #eee;
+  display: none;
+  opacity: 0;
+  background: rgba(17, 17, 17, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0; }
+  #overlay .overlay-content {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center; }
+  #overlay #nextPhoto,
+  #overlay #prevPhoto {
+    padding: 1.3px 1.2em;
+    cursor: pointer;
+    background: black; }
+  #overlay #prevPhoto {
+    margin-left: auto; }
+  #overlay #nextPhoto {
+    margin-right: auto; }
+  #overlay h1 {
+    font-size: 2em; }
+  #overlay h2 {
+    font-size: 1.4em; }
+  #overlay #container {
+    background: rgba(0, 0, 0, 0.8);
+    width: 70%;
+    max-width: 1100px;
+    margin: 3em;
+    padding: 1em 2em; }
+  #overlay .fa {
+    font-size: 5em; }
+  #overlay .imageContainer {
+    max-width: 440px;
+    width: 40%;
+    align-self: flex-start; }
+    #overlay .imageContainer img {
+      width: 100%;
+      background: #eee;
+      padding: 0.5em; }
+    #overlay .imageContainer h1,
+    #overlay .imageContainer h2 {
+      text-align: left; }
+  #overlay .album-content {
+    margin-top: 2em;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center; }
+
+.tracks {
+  width: 100%;
+  align-self: flex-start; }
+  .tracks h2 {
+    margin-top: 0; }
+  .tracks .track-list {
+    padding: 0 1em 0 2em;
+    height: 430px;
+    overflow: auto; }
+    .tracks .track-list .track {
+      border-bottom: 1px solid #878787;
+      padding-bottom: 0.5em;
+      margin: 0 0 1.1em;
+      display: flex;
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: center; }
+
+#flickr-container {
+  margin-top: 1em; }
+  #flickr-container h2 {
+    margin: 0 0 .7em 0; }
+  #flickr-container .flickr-list {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center; }
+    #flickr-container .flickr-list li {
+      padding: 0.2em;
+      width: 150px;
+      height: 100px;
+      overflow: hidden; }
+
+/*# sourceMappingURL=styles.css.map */

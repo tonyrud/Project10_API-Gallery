@@ -1,0 +1,71 @@
+/* Base Styles -------------------- */
+* {
+  box-sizing: border-box; }
+
+body {
+  color: #474747;
+  margin: 0;
+  font-family: "Rubik", sans-serif; }
+
+h1,
+h2 {
+  text-align: center; }
+
+.page {
+  background: #eee;
+  margin: 0 auto;
+  max-width: 1366px; }
+
+.primary-content {
+  text-align: center; }
+
+/* Pseudo-classes ------------------ */
+a:link {
+  color: red;
+  text-decoration: none; }
+
+a:visited {
+  color: blue; }
+
+a:hover {
+  color: rgba(255, 0, 0, 0.5); }
+
+/* Web Fonts -------------------- */
+@font-face {
+  font-family: 'Abolition Regular';
+  src: url("../fonts/abolition-regular-webfont.eot");
+  src: url("../fonts/abolition-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/abolition-regular-webfont.woff") format("woff"), url("../fonts/abolition-regular-webfont.ttf") format("truetype"); }
+
+/* Main Styles --------------------- */
+.input {
+  margin: 0 auto 1em;
+  min-width: 270px;
+  width: 80%;
+  max-width: 500px;
+  height: 35px;
+  padding-left: 10px;
+  color: #2d3945;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-family: "Rubik", sans-serif; }
+
+.main-header {
+  text-align: center;
+  padding-top: 170px;
+  height: 850px;
+  background: linear-gradient(#878787, transparent 90%), linear-gradient(0deg, #eee, transparent), #878787 url("../img/mountains.jpg") no-repeat center;
+  background-size: cover; }
+
+/*
+Gallery
+*/
+.gallery {
+  background: grey;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; }
+  .gallery .item-container {
+    width: 20%;
+    margin: 1em; }
+    .gallery .item-container img {
+      width: 100%; }

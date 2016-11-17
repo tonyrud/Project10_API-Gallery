@@ -1,16 +1,18 @@
-
 .input {
-    margin: 0 auto 1em;
+    margin:1em 0;
     min-width: 270px;
     width: 80%;
     max-width: 500px;
-    height: 35px;
-    padding-left: 10px;
-    color: #2d3945;
-    border: 1px solid grey;
-    border-radius: 5px;
+    height: $inputHeight;
+    padding: 10px;
+    color: $color-text-dark;
+    border: 0px solid grey;
+    border-radius: 4px 0 0 4px;
+    font-family: $font-fam;
+    font-size: 1em;
+    background: #ddd;
 
-    @include mQuery(desktop){
-      // text-align: center;
+    &:focus {
+      outline: none;
     }
 }

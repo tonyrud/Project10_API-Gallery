@@ -1,32 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" type="image/png" href="img/fav_icon.png">
-    <title>Site Title</title>
+
+<head>
+    <!-- <link rel="icon" type="image/png" href="img/fav_icon.png"> -->
+    <title>API Gallery</title>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700,900" rel="stylesheet">
+    <script src="https://use.fontawesome.com/118dbd8455.js"></script>
+    <link href="css/reset.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-  </head>
-  <body>
-    <div class="page">
-      <header>
-      </header>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+</head>
 
-  		<div class="primary-content">
-        Content
-        <ul>
-          <li>Stuff 1</li>
-          <li>Stuff 2</li>
-          <li>Stuff 3</li>
-          <li>Stuff 4</li>
-        </ul>
-  		</div><!-- End content -->
+<body>
+    <main class="page">
+        <header>
+            <h1>Search Spotify Artists</h1>
+        </header>
 
-  		<footer>
-  		</footer>
-    </div><!-- End page wrap -->
+        <section class="primary-content">
+            <form class="" action="index.html" method="post">
+                <input type="search" name="search" placeholder="Search Artists" class="input" id="search">
+                <input type="submit" name="name" value="Search">
+                <!-- <button type="button" name="button" id="submit" label="Name">Search</button> -->
+            </form>
+            <div class="filter-container">
+              <h4>Filter Gallery</h4>
+              <button type="button" name="button" label="Name" class="filter-btn filter-name">Name</button>
+              <button type="button" name="button" label="Date" class="filter-btn filter-date">Date</button>
+            </div>
+
+
+            <div class="gallery"></div>
+        </div>
+        <!-- End content -->
+
+        <footer>
+        </footer>
+    </section>
+    <!-- End page wrap -->
+    <!-- Overlay -->
+    <div id='overlay'>
+      <div class="overlay-content">
+        <div id="prevPhoto" class="btn-change previous"><i class="fa fa-angle-left"></i></div>
+        <div id="container">
+
+          <div class="album-overlay">
+
+              <div class="album-content">
+                  <div class="imageContainer">
+                      <img src="" alt="" />
+                      <h1 class="artist"></h1>
+                      <h2 class="album-name"></h2>
+                      <h2 class="album-year"></h2>
+                  </div>
+                  <div class="tracks">
+                      <h2>Track List</h2>
+                      <ul class="track-list">
+                      </ul>
+                  </div>
+
+              </div>
+
+          </div>
+          <div id="flickr-container">
+            <h2>Flickr Images</h2>
+            <ul class="flickr-list">
+            </ul>
+          </div>
+        </div>
+        <div id="nextPhoto" class="btn-change next"><i class="fa fa-angle-right"></i></div>
+      </div>
+
+    </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
     <script src="js/interactive.js"></script>
-  </body>
+</body>
+
 </html>
