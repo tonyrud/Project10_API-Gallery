@@ -1,14 +1,15 @@
 (function($) {
     'use strict';
-    //filter selections by name/year realeased
-    //fix read media property line 193??
 
     let albumsAjax,
         tracksAjax,
         imageSelected,
+        photoHTML,
+        itemsSort,
+        tracksArray = [],
         currentLocation = 0;
 
-    const $galleryImgs = $('.gallery'),
+    const $gallery = $('.gallery'),
         $imgReplace = $('.imageContainer img'),
         $overlay = $('#overlay'),
         $searchField = $('#search'),
@@ -21,68 +22,77 @@
         $filterName = $('#filter-name'),
         $filterDate = $('#filter-date');
 
+
+    // compare functions for sorting
+    let compare = {
+        name: function(a, b) {
+            a = a.replace(/^the /i, ''); //remove 'the' from the beginning of name
+            b = b.replace(/^the /i, ''); //remove 'the' from the beginning of name
+
+            if (a < b) {
+                return -1;
+            } else {
+                return a > b ? 1 : 0; //if a is greater than b, return 1 : or return 0 if the same
+            }
+        },
+        date: function(a, b) {
+            a = new Date(a);
+            b = new Date(b);
+
+            return a - b;
+        }
+    };
+
+
     /****************
       Event functions
     *****************/
 
-    // $overlay.append($imageContainer)
-    // $("body").append($overlay);
-
     $('form').submit(function(evt) {
         evt.preventDefault();
+        photoHTML = '';
+        tracksArray = [];
 
-        // $('.item-container').addClass('animate-out')
-
+        $('.filter-btn').removeClass('ascending descending');
         //run ajax function from seach val
         if ($searchField.val().length > 0) {
-          getAlbumsAjax($searchField.val());
-          //disable search field and button while searching
-          $searchField.prop("disabled", true);
-          $submitButton.attr("disabled", true).val('searching...');
+            getAlbumsAjax($searchField.val());
+
+            //disable search field and button while searching
+            disableBtns(true, 'searching...');
         } else {
-          console.log('Enter an item');
+            console.log('Enter an item');
         }
 
 
 
     });
 
+    let disableBtns = function(disable, btnValue){
+      $searchField.prop("disabled", disable);
+      $submitButton.attr("disabled", disable).val(btnValue);
+    }
+
     // click an image in the gallery
-    $galleryImgs.on("click", ".item-container a", function(evt) {
+    $gallery.on("click", ".item-container .overlay-details", function(evt) {
         evt.preventDefault();
-        imageSelected = $(this);
+        imageSelected = $(this).siblings('a');
         currentLocation = $(this).parent('.item-container').index();
 
-        //pass albums info, and the album clicked
-        getTracksAjax(albumsAjax, currentLocation);
+        createTracks(tracksArray[currentLocation]);
+
+
 
         $overlay.show().animate({
             opacity: '1'
         }, 500);
     });
 
-    // create all album content
-    let setAlbumInfo = function(tracksData, selectedImage) {
-
-        // console.log(selectedImage);
-        $imgReplace.attr('src', selectedImage);
-        $artist.html(tracksData.artists[0].name);
-        $albumName.html(tracksData.name);
-        $albumYear.html(tracksData.release_date.slice(0, 4));
-
-        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?", {
-                tags: tracksData.artists[0].name,
-                format: "json"
-            },
-            displayFlickrImages);
-    }
-
     // move overlay slide
     $overlay.on('click', '.btn-change', function(e) {
         e.stopPropagation();
         let clicked = $(this),
-            changeImg,
-            totalItems = albumsAjax.albums.items.length - 1;
+            totalItems = albumsAjax.length - 1;
 
         if (clicked.hasClass('next') && (currentLocation < totalItems)) {
             currentLocation++;
@@ -90,18 +100,7 @@
             currentLocation--;
         } else {}
 
-        changeImg = albumsAjax.albums.items[currentLocation].images[1].url
-        getTracksAjax(albumsAjax, currentLocation);
-    });
-
-    // filter albums
-    $('.filter-container').on('click', '.filter-btn', function(e) {
-        let clicked = $(this);
-        if (clicked.hasClass('filter-name')) {
-
-        } else {
-
-        }
+        createTracks(tracksArray[currentLocation]);
     });
 
     //remove overlay when clicked
@@ -114,50 +113,137 @@
         })
     });
 
+    /****************
+      filter functions
+    *****************/
+
+    let gallerySort = function() {
+
+    };
+
+    // filter albums
+    $('.filter-container').on('click', '.filter-btn', function(e) {
+      $gallery.each(function() {
+          let $gallerySort = $(this);
+          itemsSort = $gallery.find('.item-container').toArray();
+      });
+
+        let $clicked = $(this),
+            order = $clicked.data('sort'),
+            column;
+
+        //check if item is ascending or descending, then reverse
+        if ($clicked.is('.ascending') || $clicked.is('.descending')) {
+            $clicked.toggleClass('ascending descending');
+            gallerySort();
+            $gallery.append(itemsSort.reverse());
+            tracksArray.reverse();
+        } else {
+            gallerySort();
+            $clicked.addClass('ascending');
+            $clicked.siblings().removeClass('ascending descending');
+
+            //if compare object has data-sort
+            if (compare.hasOwnProperty(order)) {
+              column = $clicked.index()-1;
+
+                for (var track in tracksArray) {
+                  if (column === 0) {
+                    tracksArray.sort(function(a, b) {
+                        a = a.name;
+                        b = b.name;
+                        return compare[order](a,b);
+                    });
+                  } else {
+                    tracksArray.sort(function(a, b) {
+                        a = a.release_date;
+                        b = b.release_date;
+                        return compare[order](a,b);
+                    });
+                  }
+                }
+
+                itemsSort.sort(function(a, b) {
+                    a = a.children[1].children[column].innerHTML;
+                    b = b.children[1].children[column].innerHTML;
+                    return compare[order](a,b);
+                });
+                $gallery.append(itemsSort);
+            }
+        }
+    });
+
+    // create all album content
+    let setAlbumInfo = function(tracksData) {
+        let year = tracksData.release_date.slice(0, 4),
+            name = tracksData.name,
+            picture = tracksData.images[0].url;
+
+        $imgReplace.attr('src', picture);
+        $artist.html(tracksData.artists[0].name);
+        $albumName.html(name);
+        $albumYear.html(year);
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?", {
+                tags: tracksData.artists[0].name,
+                format: "json"
+            },
+            displayFlickrImages);
+    }
+
     //create gallery
     var createGallery = function(data) {
-        albumsAjax = data;
+        let albumImg = data.images[1].url,
+            albumYear = data.release_date.slice(0, 4),
+            albumName = data.name;
 
-        var albumsImg = data.albums.items;
-        let photoHTML = '';
+        photoHTML += '<div class="item-container">';
+        photoHTML += '<a href="' + albumImg + '">';
+        photoHTML += '<img class="image thumb" src="' + albumImg + '" alt="Gallery images"/></a>';
+        photoHTML += '<div class="overlay-details">'
+        photoHTML += '<h2 class="overlay-album">' + albumName + '</h2>'
+        photoHTML += '<h3 class="overlay-year">' + albumYear + '</h3>'
+        photoHTML += '</div>'
+        photoHTML += '</div>';
 
-        var createHTML = function(current) {
-            photoHTML += '<div class="item-container">';
-            photoHTML += '<a href="' + current.images[0].url + '">';
-            photoHTML += '<img class="image thumb" src="' + current.images[1].url + '" alt="Gallery images"/></a>';
-            photoHTML += '</div>';
-            $galleryImgs.html(photoHTML);
-        }
+        $gallery.html(photoHTML);
 
-        for (var album in albumsImg) {
-            createHTML(albumsImg[album]);
-        }
-
-        if (albumsImg.length === 0) {
-          photoHTML = '<h2>No Albums Found</h2>';
-        } else {
-
-        }
-
+        //animate albums in
         $('.item-container').each(function(i) {
-          let element = $(this);
-          setTimeout(function () {
-            element.addClass('animate-in');
-          }, 100 * i);
+            let element = $(this);
+            setTimeout(function() {
+                element.addClass('animate-in');
+            }, 100 * i);
         });
 
+        disableBtns(false, 'Search');
+    }
 
+    let tracksData = function(data) {
+        tracksAjax = data;
+        tracksArray.push(tracksAjax);
+        createGallery(tracksAjax);
+    }
 
+    let albumData = function(data) {
+        albumsAjax = data.albums.items;
 
-        $searchField.prop("disabled", false);
-        $submitButton.attr("disabled", false).val('Search');
+        if (albumsAjax.length === 0) {
+            photoHTML = '<h2>No Albums Found</h2>';
+            $gallery.html(photoHTML);
+            disableBtns(false, 'Search');
+        }
+        for (var album in albumsAjax) {
+            getTracksAjax(data, album);
+        }
+
+        // createGallery(albumsAjax);
     }
 
     //create tracks list
     let createTracks = function(data) {
-        let tracksToShow = 100;
+
         //run set data function
-        setAlbumInfo(data, albumsAjax.albums.items[currentLocation].images[1].url)
+        setAlbumInfo(data)
             // tracksAjax = data;
         let tracksHTML = '';
         let tracksList = data.tracks.items
@@ -172,12 +258,12 @@
             tracksHTML += '<span>' + current.track_number + '. ' + current.name + '</span>' + '<span>' + msToMinutesAndSeconds(current.duration_ms) + '</span>';
             tracksHTML += '</li>'
             return tracksHTML
-        }
+        };
 
         //loop through tracks
         for (var i = 0; i < tracksList.length; i++) {
             createTrackList(tracksList[i]);
-          }
+        };
 
         $('.track-list').html(tracksHTML);
     }
@@ -198,7 +284,7 @@
         }
 
         $('.flickr-list').html(listImg);
-    }
+    };
 
     /****************
       AJAX Calls
@@ -206,22 +292,25 @@
 
     //ajax functions
     let getAlbumsAjax = function(query) {
+
         $.ajax({
             url: 'https://api.spotify.com/v1/search',
             data: {
                 q: query,
                 type: 'album'
             },
-            success: createGallery
+            success: albumData
         });
+
     };
 
     //Ajax call for track info
     let getTracksAjax = function(data, index) {
-        let imageId = data.albums.items[index].id
+        // console.log(data);
+        let imageId = data.albums.items[index].id;
         $.ajax({
             url: 'https://api.spotify.com/v1/albums/' + imageId,
-            success: createTracks
+            success: tracksData
         });
     };
 })(jQuery);

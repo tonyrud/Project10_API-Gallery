@@ -15,10 +15,11 @@ $color-text-dark   : darken($grey, 25%);
 
 $color-border-light : lighten($grey, 35%);
 $color-border-dark  : $black;
+$color-button-bg: #529bec;
 
 $color-link-default : red;
 $color-link-visited : blue;
-$color-overlay: rgba($black, .7);
+$color-overlay: rgba($black, .9);
 
 $color-shadow       : rgba($black,.8);
 $color-body         : $white;

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- <link rel="icon" type="image/png" href="img/fav_icon.png"> -->
+    <link rel="icon" type="image/png" href="img/fav_icon.png">
     <title>API Gallery</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700,900" rel="stylesheet">
@@ -22,55 +22,63 @@
             <form class="" action="index.html" method="post">
                 <input type="search" name="search" placeholder="Search Artists" class="input" id="search">
                 <input type="submit" name="name" value="Search">
-                <!-- <button type="button" name="button" id="submit" label="Name">Search</button> -->
             </form>
             <div class="filter-container">
-              <h4>Filter Gallery</h4>
-              <button type="button" name="button" label="Name" class="filter-btn filter-name">Name</button>
-              <button type="button" name="button" label="Date" class="filter-btn filter-date">Date</button>
+                <h4>Filter Gallery</h4>
+                <button data-sort="name" type="button" name="button" label="Name" class="filter-btn filter-name">
+                <div class="btn-content">
+                  <p>Name</p>
+                  <div class="sort-arrows">
+                    <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                    <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </button>
+                <button data-sort="date" type="button" name="button" label="Date" class="filter-btn filter-date"><div class="btn-content">
+                <p>Date</p>
+                <div class="sort-arrows">
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </div>
+              </div></button>
             </div>
-
-
             <div class="gallery"></div>
-        </div>
-        <!-- End content -->
+            </div>
+            <!-- End content -->
+        </section>
+        <!-- End page wrap -->
+        <!-- Overlay -->
+        <div id='overlay'>
+            <div class="overlay-content">
+                <div id="prevPhoto" class="btn-change previous"><i class="fa fa-angle-left"></i></div>
+                <div id="container">
 
-        <footer>
-        </footer>
-    </section>
-    <!-- End page wrap -->
-    <!-- Overlay -->
-    <div id='overlay'>
-      <div class="overlay-content">
-        <div id="prevPhoto" class="btn-change previous"><i class="fa fa-angle-left"></i></div>
-        <div id="container">
+                    <div class="album-overlay">
 
-          <div class="album-overlay">
+                        <div class="album-content">
+                            <div class="imageContainer">
+                                <img src="" alt="" />
+                                <h1 class="artist"></h1>
+                                <h2 class="album-name"></h2>
+                                <h2 class="album-year"></h2>
+                            </div>
+                            <div class="tracks">
+                                <h2>Track List</h2>
+                                <ul class="track-list">
+                                </ul>
+                            </div>
 
-              <div class="album-content">
-                  <div class="imageContainer">
-                      <img src="" alt="" />
-                      <h1 class="artist"></h1>
-                      <h2 class="album-name"></h2>
-                      <h2 class="album-year"></h2>
-                  </div>
-                  <div class="tracks">
-                      <h2>Track List</h2>
-                      <ul class="track-list">
-                      </ul>
-                  </div>
+                        </div>
 
-              </div>
-
-          </div>
-          <div id="flickr-container">
-            <h2>Flickr Images</h2>
-            <ul class="flickr-list">
-            </ul>
-          </div>
-        </div>
-        <div id="nextPhoto" class="btn-change next"><i class="fa fa-angle-right"></i></div>
-      </div>
+                    </div>
+                    <div id="flickr-container">
+                        <h2>Flickr Images</h2>
+                        <ul class="flickr-list">
+                        </ul>
+                    </div>
+                </div>
+                <div id="nextPhoto" class="btn-change next"><i class="fa fa-angle-right"></i></div>
+            </div>
 
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

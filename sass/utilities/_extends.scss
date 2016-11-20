@@ -1,10 +1,4 @@
 
-// Columns
-
-%columns {
-  width: 46.5%;
-}
-
 // Clearfix
 
 %clearfix {
@@ -19,13 +13,13 @@
 
 %button {
   border: 0px solid #eee;
-  background: #aaa;
-  color: $color-text-light;
-  padding: 10px;
+  background: $color-button-bg;
+  color: #eee;
+  // padding: 10px;
   text-transform: uppercase;
   margin: .5em auto 1em;
   display: inline-block;
-  width: 10%;
+  width: 7em;
   height: $inputHeight;
   max-width: 300px;
   text-align: center;
@@ -33,4 +27,24 @@
   border-radius: .25em;
   font-size: 1em;
   cursor: pointer;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    background: lighten($color-button-bg, 5%);
+  }
+}
+
+%input {
+  margin:1em 0;
+  min-width: 270px;
+  width: 80%;
+  max-width: 500px;
+  height: $inputHeight;
+  padding: 10px;
+  color: $color-text-dark;
+  border: 0px solid grey;
+  border-radius: 4px 0 0 4px;
+  font-family: $font-fam;
+  font-size: 1em;
+  background: #ddd;
 }

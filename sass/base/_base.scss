@@ -17,14 +17,19 @@ h2 {
   font-size: $font-header;
 }
 
+h4 {
+  margin: .3em 0;
+  font-size: 1.3em;
+}
+
 form {
-  margin: .6em 0;
+  margin: .6em auto;
+  width: 80%;
   @include flexMix();
 }
 
 
 .page {
-  // background: $white;
   margin: 0 auto;
   max-width: 1366px;
 }

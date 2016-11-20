@@ -1,17 +1,5 @@
 .input {
-    margin:1em 0;
-    min-width: 270px;
-    width: 80%;
-    max-width: 500px;
-    height: $inputHeight;
-    padding: 10px;
-    color: $color-text-dark;
-    border: 0px solid grey;
-    border-radius: 4px 0 0 4px;
-    font-family: $font-fam;
-    font-size: 1em;
-    background: #ddd;
-
+    @extend %input;
     &:focus {
       outline: none;
     }

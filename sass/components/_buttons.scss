@@ -5,6 +5,24 @@ button {
     &:focus {
         outline: -webkit-focus-ring-color auto 0;
     }
+
+  .btn-content{
+    @include flexMix();
+    padding: 0 1em;
+  }
+
+  .sort-arrows {
+    @include flexMix(column);
+    margin-left: auto;
+    font-size: 1.2em;
+    margin-bottom: auto;
+  }
+
+  .fa-sort-asc,
+  .fa-sort-desc {
+    height: 0px;
+  }
+
 }
 
 input[type='submit'] {
@@ -12,4 +30,19 @@ input[type='submit'] {
     margin: 0;
     border-radius: 0 4px 4px 0;
     outline: none;
+}
+
+.ascending {
+  background: darken($color-button-bg, 5%);
+
+  & .fa-sort-desc {
+    display: none;
+  }
+}
+.descending {
+  background: darken($color-button-bg, 5%);
+
+  & .fa-sort-asc {
+    display: none;
+  }
 }
