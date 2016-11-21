@@ -16,18 +16,13 @@
         $submitButton = $('#submit'),
         $artist = $('.artist'),
         $albumName = $('.album-name'),
-        $albumYear = $('.album-year'),
-        $nextBtn = $('#nextPhoto'),
-        $prevBtn = $('#prevPhoto'),
-        $filterName = $('#filter-name'),
-        $filterDate = $('#filter-date');
-
+        $albumYear = $('.album-year');
 
     // compare functions for sorting
     let compare = {
         name: function(a, b) {
             a = a.replace(/^the /i, ''); //remove 'the' from the beginning of name
-            b = b.replace(/^the /i, ''); //remove 'the' from the beginning of name
+            b = b.replace(/^the /i, '');
 
             if (a < b) {
                 return -1;
@@ -59,19 +54,20 @@
             getAlbumsAjax($searchField.val());
 
             //disable search field and button while searching
-            disableBtns(true, 'searching...');
+            disableBtns(true, 'Searching...');
         } else {
             console.log('Enter an item');
+            setTimeout(function () {
+              $searchField.attr('placeholder', 'Search Artists');
+            }, 750);
+            $searchField.attr('placeholder', 'Enter an artists name');
         }
-
-
-
     });
 
     let disableBtns = function(disable, btnValue){
       $searchField.prop("disabled", disable);
       $submitButton.attr("disabled", disable).val(btnValue);
-    }
+    };
 
     // click an image in the gallery
     $gallery.on("click", ".item-container .overlay-details", function(evt) {
@@ -80,8 +76,6 @@
         currentLocation = $(this).parent('.item-container').index();
 
         createTracks(tracksArray[currentLocation]);
-
-
 
         $overlay.show().animate({
             opacity: '1'
@@ -105,26 +99,20 @@
 
     //remove overlay when clicked
     $overlay.on('click', function(event) {
-        // event.stopPropagation();
         $overlay.animate({
             opacity: '0'
         }, 'fast', function() {
             $overlay.hide();
-        })
+        });
     });
 
     /****************
-      filter functions
+      filter function
     *****************/
-
-    let gallerySort = function() {
-
-    };
 
     // filter albums
     $('.filter-container').on('click', '.filter-btn', function(e) {
       $gallery.each(function() {
-          let $gallerySort = $(this);
           itemsSort = $gallery.find('.item-container').toArray();
       });
 
@@ -135,11 +123,9 @@
         //check if item is ascending or descending, then reverse
         if ($clicked.is('.ascending') || $clicked.is('.descending')) {
             $clicked.toggleClass('ascending descending');
-            gallerySort();
             $gallery.append(itemsSort.reverse());
             tracksArray.reverse();
         } else {
-            gallerySort();
             $clicked.addClass('ascending');
             $clicked.siblings().removeClass('ascending descending');
 
@@ -147,20 +133,18 @@
             if (compare.hasOwnProperty(order)) {
               column = $clicked.index()-1;
 
-                for (var track in tracksArray) {
-                  if (column === 0) {
-                    tracksArray.sort(function(a, b) {
-                        a = a.name;
-                        b = b.name;
-                        return compare[order](a,b);
-                    });
-                  } else {
-                    tracksArray.sort(function(a, b) {
-                        a = a.release_date;
-                        b = b.release_date;
-                        return compare[order](a,b);
-                    });
-                  }
+                if (column === 0) {
+                  tracksArray.sort(function(a, b) {
+                      a = a.name;
+                      b = b.name;
+                      return compare[order](a,b);
+                  });
+                } else {
+                  tracksArray.sort(function(a, b) {
+                      a = a.release_date;
+                      b = b.release_date;
+                      return compare[order](a,b);
+                  });
                 }
 
                 itemsSort.sort(function(a, b) {
@@ -188,7 +172,7 @@
                 format: "json"
             },
             displayFlickrImages);
-    }
+    };
 
     //create gallery
     var createGallery = function(data) {
@@ -199,54 +183,57 @@
         photoHTML += '<div class="item-container">';
         photoHTML += '<a href="' + albumImg + '">';
         photoHTML += '<img class="image thumb" src="' + albumImg + '" alt="Gallery images"/></a>';
-        photoHTML += '<div class="overlay-details">'
-        photoHTML += '<h2 class="overlay-album">' + albumName + '</h2>'
-        photoHTML += '<h3 class="overlay-year">' + albumYear + '</h3>'
-        photoHTML += '</div>'
+        photoHTML += '<div class="overlay-details">';
+        photoHTML += '<h2 class="overlay-album">' + albumName + '</h2>';
+        photoHTML += '<h3 class="overlay-year">' + albumYear + '</h3>';
+        photoHTML += '</div>';
         photoHTML += '</div>';
 
         $gallery.html(photoHTML);
 
-        //animate albums in
-        $('.item-container').each(function(i) {
-            let element = $(this);
-            setTimeout(function() {
-                element.addClass('animate-in');
-            }, 100 * i);
-        });
-
         disableBtns(false, 'Search');
-    }
+
+        //run animation after timer to let image load
+        setTimeout(function () {
+          animateIn();
+        }, 300);
+    };
 
     let tracksData = function(data) {
         tracksAjax = data;
         tracksArray.push(tracksAjax);
         createGallery(tracksAjax);
-    }
+    };
 
     let albumData = function(data) {
         albumsAjax = data.albums.items;
-
+        let albumCount;
         if (albumsAjax.length === 0) {
             photoHTML = '<h2>No Albums Found</h2>';
             $gallery.html(photoHTML);
             disableBtns(false, 'Search');
         }
         for (var album in albumsAjax) {
-            getTracksAjax(data, album);
+          albumCount = album
+          getTracksAjax(data, album);
         }
+    };
 
-        // createGallery(albumsAjax);
+    let animateIn = function(){
+      $('.item-container').each(function(i) {
+          let element = $(this);
+          setTimeout(function() {
+              element.addClass('animate-in');
+          }, 100 * i);
+      });
     }
 
     //create tracks list
     let createTracks = function(data) {
 
-        //run set data function
-        setAlbumInfo(data)
-            // tracksAjax = data;
+        setAlbumInfo(data);
         let tracksHTML = '';
-        let tracksList = data.tracks.items
+        let tracksList = data.tracks.items;
 
         function msToMinutesAndSeconds(ms) {
             var minutes = Math.floor(ms / 60000);
@@ -254,33 +241,33 @@
             return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
         }
         var createTrackList = function(current) {
-            tracksHTML += '<li class="track">'
+            tracksHTML += '<li class="track">';
             tracksHTML += '<span>' + current.track_number + '. ' + current.name + '</span>' + '<span>' + msToMinutesAndSeconds(current.duration_ms) + '</span>';
-            tracksHTML += '</li>'
-            return tracksHTML
+            tracksHTML += '</li>';
+            return tracksHTML;
         };
 
         //loop through tracks
         for (var i = 0; i < tracksList.length; i++) {
             createTrackList(tracksList[i]);
-        };
+        }
 
         $('.track-list').html(tracksHTML);
-    }
+    };
 
     //create flickr images
     var displayFlickrImages = function(data) {
         let flickItems = data.items,
             listImg = '';
         for (var i = 0; i < 6; i++) {
-            listImg += '<li>'
-            listImg += '<img src="'
-            if (data.items == 0) {
-                listImg = 'no images';
+            listImg += '<li>';
+            listImg += '<img src="';
+            if (data.items.length === 0) {
+                listImg = 'No images found on Flickr';
             } else {
                 listImg += flickItems[i].media.m + '" alt="flickr image">';
             }
-            listImg += '</li>'
+            listImg += '</li>';
         }
 
         $('.flickr-list').html(listImg);

@@ -266,7 +266,8 @@ Overlay lightbox
       align-items: center; }
 
 #flickr-container {
-  margin-top: 1em; }
+  margin-top: 1em;
+  height: 130px; }
   #flickr-container h2 {
     margin: 0 0 .7em 0; }
   #flickr-container .flickr-list {
